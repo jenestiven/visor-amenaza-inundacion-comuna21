@@ -6,7 +6,7 @@ Este repositorio se dedica a la presentación de capas geográficas en un mapa i
 
 Este repositorio está alojado en GitHub Pages, lo que permite una fácil visualización. Puedes acceder al mapa interactivo a través del siguiente enlace:
 
-Ver Mapa
+[Ver Mapa] (https://jenestiven.github.io/visor-amenaza-inundacion-comuna21/#14/3.4241/-76.4942)
 
 ## Categoría 🏷️
 
