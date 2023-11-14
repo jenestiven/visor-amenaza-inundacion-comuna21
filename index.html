@@ -1,56 +1,64 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
-        <meta name="mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
-        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
-        <link rel="stylesheet" href="css/leaflet-search.css">
-        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
-        <link rel="stylesheet" href="css/leaflet-measure.css">
-        <style>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="css/leaflet.css">
+    <link rel="stylesheet" href="css/L.Control.Locate.min.css">
+    <link rel="stylesheet" href="css/qgis2web.css">
+    <link rel="stylesheet" href="css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="css/leaflet-search.css">
+    <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+    <link rel="stylesheet" href="css/leaflet-measure.css">
+    <style>
         #map {
             width: 1191px;
             height: 735px;
         }
-        </style>
-        <title></title>
-    </head>
-    <body>
-        <div id="map">
-        </div>
-        <script src="js/qgis2web_expressions.js"></script>
-        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
-        <script src="js/leaflet.rotatedMarker.js"></script>
-        <script src="js/leaflet.pattern.js"></script>
-        <script src="js/leaflet-hash.js"></script>
-        <script src="js/Autolinker.min.js"></script>
-        <script src="js/rbush.min.js"></script>
-        <script src="js/labelgun.min.js"></script>
-        <script src="js/labels.js"></script>
-        <script src="js/leaflet.wms.js"></script>
-        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
-        <script src="js/leaflet-measure.js"></script>
-        <script src="js/leaflet-search.js"></script>
-        <script src="data/cuerpos_de_agua_en_la_comuna_21_3.js"></script>
-        <script src="data/inundacion_en_el_ao_2011_en_la_comuna_21_6.js"></script>
-        <script src="data/construcciones_ilegales_jarillon_14.js"></script>
-        <script>
+    </style>
+    <title>Mapa de amanaza de inundacion fluvial</title>
+</head>
+
+<body>
+    <div id="map">
+    </div>
+    <script src="js/qgis2web_expressions.js"></script>
+    <script src="js/leaflet.js"></script>
+    <script src="js/L.Control.Locate.min.js"></script>
+    <script src="js/leaflet.rotatedMarker.js"></script>
+    <script src="js/leaflet.pattern.js"></script>
+    <script src="js/leaflet-hash.js"></script>
+    <script src="js/Autolinker.min.js"></script>
+    <script src="js/rbush.min.js"></script>
+    <script src="js/labelgun.min.js"></script>
+    <script src="js/labels.js"></script>
+    <script src="js/leaflet.wms.js"></script>
+    <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+    <script src="js/leaflet-measure.js"></script>
+    <script src="js/leaflet-search.js"></script>
+    <script src="data/cuerpos_de_agua_en_la_comuna_21_3.js"></script>
+    <script src="data/inundacion_en_el_ao_2011_en_la_comuna_21_6.js"></script>
+    <script src="data/construcciones_ilegales_jarillon_14.js"></script>
+    <script src="geojson/amenaza_inundacion.js"></script>
+    <script src="geojson/construcciones_ilegales.js"></script>
+
+    <script>
         var highlightLayer;
         function highlightFeature(e) {
             highlightLayer = e.target;
             highlightLayer.openPopup();
         }
         var map = L.map('map', {
-            zoomControl:true, maxZoom:28, minZoom:1
-        }).fitBounds([[3.395900887800644,-76.5405823747067],[3.4544178204439264,-76.44618422119602]]);
+            zoomControl: true, maxZoom: 28, minZoom: 1
+        }).fitBounds([[3.395900887800644, -76.5405823747067], [3.4544178204439264, -76.44618422119602]]);
         var hash = new L.Hash(map);
         map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
-        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
-        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var autolinker = new Autolinker({ truncate: { length: 30, location: 'smart' } });
+        L.control.locate({ locateOptions: { maxZoom: 19 } }).addTo(map);
         var measureControl = new L.Control.Measure({
             position: 'topleft',
             primaryLengthUnit: 'meters',
@@ -60,9 +68,9 @@
         });
         measureControl.addTo(map);
         document.getElementsByClassName('leaflet-control-measure-toggle')[0]
-        .innerHTML = '';
+            .innerHTML = '';
         document.getElementsByClassName('leaflet-control-measure-toggle')[0]
-        .className += ' fas fa-ruler';
+            .className += ' fas fa-ruler';
         var bounds_group = new L.featureGroup([]);
         function setBounds() {
         }
@@ -86,7 +94,7 @@
             format: 'image/png',
             uppercase: true,
             transparent: true,
-            continuousWorld : true,
+            continuousWorld: true,
             tiled: true,
             info_format: 'text/html',
             opacity: 1,
@@ -101,7 +109,7 @@
             format: 'image/png',
             uppercase: true,
             transparent: true,
-            continuousWorld : true,
+            continuousWorld: true,
             tiled: true,
             info_format: 'text/html',
             opacity: 1,
@@ -111,11 +119,11 @@
         map.addLayer(layer_cabecera_municipal_2);
         function pop_cuerpos_de_agua_en_la_comuna_21_3(feature, layer) {
             layer.on({
-                mouseout: function(e) {
+                mouseout: function (e) {
                     if (typeof layer.closePopup == 'function') {
                         layer.closePopup();
                     } else {
-                        layer.eachLayer(function(feature){
+                        layer.eachLayer(function (feature) {
                             feature.closePopup()
                         });
                     }
@@ -156,7 +164,7 @@
                         <td colspan="2">' + (feature.properties['shape_len'] !== null ? autolinker.link(feature.properties['shape_len'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
+            layer.bindPopup(popupContent, { maxHeight: 400 });
         }
 
         function style_cuerpos_de_agua_en_la_comuna_21_3_0() {
@@ -167,7 +175,7 @@
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
-                weight: 1.0, 
+                weight: 1.0,
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(1,52,255,1.0)',
@@ -195,7 +203,7 @@
             format: 'image/png',
             uppercase: true,
             transparent: true,
-            continuousWorld : true,
+            continuousWorld: true,
             tiled: true,
             info_format: 'text/html',
             opacity: 1,
@@ -210,7 +218,7 @@
             format: 'image/png',
             uppercase: true,
             transparent: true,
-            continuousWorld : true,
+            continuousWorld: true,
             tiled: true,
             info_format: 'text/html',
             opacity: 1,
@@ -220,11 +228,11 @@
         map.addLayer(layer_comuna_21_5);
         function pop_inundacion_en_el_ao_2011_en_la_comuna_21_6(feature, layer) {
             layer.on({
-                mouseout: function(e) {
+                mouseout: function (e) {
                     if (typeof layer.closePopup == 'function') {
                         layer.closePopup();
                     } else {
-                        layer.eachLayer(function(feature){
+                        layer.eachLayer(function (feature) {
                             feature.closePopup()
                         });
                     }
@@ -252,7 +260,7 @@
                         <td colspan="2">' + (feature.properties['shape_len'] !== null ? autolinker.link(feature.properties['shape_len'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
+            layer.bindPopup(popupContent, { maxHeight: 400 });
         }
 
         function style_inundacion_en_el_ao_2011_en_la_comuna_21_6_0() {
@@ -263,7 +271,7 @@
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
-                weight: 1.0, 
+                weight: 1.0,
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(0,184,12,1.0)',
@@ -286,11 +294,11 @@
         map.addLayer(layer_inundacion_en_el_ao_2011_en_la_comuna_21_6);
         function pop_frecuencia_de_inundaciones_en_la_comuna_21_7(feature, layer) {
             layer.on({
-                mouseout: function(e) {
+                mouseout: function (e) {
                     if (typeof layer.closePopup == 'function') {
                         layer.closePopup();
                     } else {
-                        layer.eachLayer(function(feature){
+                        layer.eachLayer(function (feature) {
                             feature.closePopup()
                         });
                     }
@@ -365,7 +373,7 @@
                         <td colspan="2">' + (feature.properties['shape_len'] !== null ? autolinker.link(feature.properties['shape_len'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
+            layer.bindPopup(popupContent, { maxHeight: 400 });
         }
 
         function style_frecuencia_de_inundaciones_en_la_comuna_21_7_0() {
@@ -376,7 +384,7 @@
                 dashArray: '',
                 lineCap: 'butt',
                 lineJoin: 'miter',
-                weight: 1.0, 
+                weight: 1.0,
                 fill: true,
                 fillOpacity: 1,
                 fillColor: 'rgba(166,206,227,1.0)',
@@ -407,7 +415,7 @@
             format: 'image/png',
             uppercase: true,
             transparent: true,
-            continuousWorld : true,
+            continuousWorld: true,
             tiled: true,
             info_format: 'text/html',
             opacity: 1,
@@ -422,7 +430,7 @@
             format: 'image/png',
             uppercase: true,
             transparent: true,
-            continuousWorld : true,
+            continuousWorld: true,
             tiled: true,
             info_format: 'text/html',
             opacity: 1,
@@ -437,7 +445,7 @@
             format: 'image/png',
             uppercase: true,
             transparent: true,
-            continuousWorld : true,
+            continuousWorld: true,
             tiled: true,
             info_format: 'text/html',
             opacity: 1,
@@ -452,7 +460,7 @@
             format: 'image/png',
             uppercase: true,
             transparent: true,
-            continuousWorld : true,
+            continuousWorld: true,
             tiled: true,
             info_format: 'text/html',
             opacity: 1,
@@ -467,7 +475,7 @@
             format: 'image/png',
             uppercase: true,
             transparent: true,
-            continuousWorld : true,
+            continuousWorld: true,
             tiled: true,
             info_format: 'text/html',
             opacity: 1,
@@ -482,7 +490,7 @@
             format: 'image/png',
             uppercase: true,
             transparent: true,
-            continuousWorld : true,
+            continuousWorld: true,
             tiled: true,
             info_format: 'text/html',
             opacity: 1,
@@ -492,11 +500,11 @@
         map.addLayer(layer_infraestructura_critica_13);
         function pop_construcciones_ilegales_jarillon_14(feature, layer) {
             layer.on({
-                mouseout: function(e) {
+                mouseout: function (e) {
                     if (typeof layer.closePopup == 'function') {
                         layer.closePopup();
                     } else {
-                        layer.eachLayer(function(feature){
+                        layer.eachLayer(function (feature) {
                             feature.closePopup()
                         });
                     }
@@ -516,55 +524,55 @@
                         <td colspan="2"><strong>amenaza</strong><br />' + (feature.properties['amenaza'] !== null ? autolinker.link(feature.properties['amenaza'].toLocaleString()) : '') + '</td>\
                     </tr>\
                 </table>';
-            layer.bindPopup(popupContent, {maxHeight: 400});
+            layer.bindPopup(popupContent, { maxHeight: 400 });
         }
 
         function style_construcciones_ilegales_jarillon_14_0(feature) {
-            switch(String(feature.properties['amenaza'])) {
+            switch (String(feature.properties['amenaza'])) {
                 case 'alta':
                     return {
-                pane: 'pane_construcciones_ilegales_jarillon_14',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(48,18,59,1.0)',
-                interactive: true,
-            }
+                        pane: 'pane_construcciones_ilegales_jarillon_14',
+                        opacity: 1,
+                        color: 'rgba(35,35,35,1.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 1,
+                        fillColor: 'rgba(48,18,59,1.0)',
+                        interactive: true,
+                    }
                     break;
                 case 'media':
                     return {
-                pane: 'pane_construcciones_ilegales_jarillon_14',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(27,229,181,1.0)',
-                interactive: true,
-            }
+                        pane: 'pane_construcciones_ilegales_jarillon_14',
+                        opacity: 1,
+                        color: 'rgba(35,35,35,1.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 1,
+                        fillColor: 'rgba(27,229,181,1.0)',
+                        interactive: true,
+                    }
                     break;
                 case 'muy alta':
                     return {
-                pane: 'pane_construcciones_ilegales_jarillon_14',
-                opacity: 1,
-                color: 'rgba(35,35,35,1.0)',
-                dashArray: '',
-                lineCap: 'butt',
-                lineJoin: 'miter',
-                weight: 1.0, 
-                fill: true,
-                fillOpacity: 1,
-                fillColor: 'rgba(251,185,56,1.0)',
-                interactive: true,
-            }
+                        pane: 'pane_construcciones_ilegales_jarillon_14',
+                        opacity: 1,
+                        color: 'rgba(35,35,35,1.0)',
+                        dashArray: '',
+                        lineCap: 'butt',
+                        lineJoin: 'miter',
+                        weight: 1.0,
+                        fill: true,
+                        fillOpacity: 1,
+                        fillColor: 'rgba(251,185,56,1.0)',
+                        interactive: true,
+                    }
                     break;
             }
         }
@@ -589,19 +597,23 @@
             title: 'Testing'
         }).addTo(map);
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
-        .className += ' fa fa-search';
+            .className += ' fa fa-search';
         document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
-        .title += 'Search for a place';
+            .title += 'Search for a place';
         var baseMaps = {};
-        L.control.layers(baseMaps,{'construcciones_ilegales_jarillon<br /><table><tr><td style="text-align: center;"><img src="legend/construcciones_ilegales_jarillon_14_alta0.png" /></td><td>alta</td></tr><tr><td style="text-align: center;"><img src="legend/construcciones_ilegales_jarillon_14_media1.png" /></td><td>media</td></tr><tr><td style="text-align: center;"><img src="legend/construcciones_ilegales_jarillon_14_muyalta2.png" /></td><td>muy alta</td></tr></table>': layer_construcciones_ilegales_jarillon_14,"infraestructura_critica": layer_infraestructura_critica_13,"vias_principales_de_la_comuna": layer_vias_principales_de_la_comuna_12,"tramos_de_desborde": layer_tramos_de_desborde_11,"amenaza_de_inundacion_fluvial_en_la_comuna_21": layer_amenaza_de_inundacion_fluvial_en_la_comuna_21_10,"barrios_de_la_comuna_21": layer_barrios_de_la_comuna_21_9,"construcciones_catastrales_de_la_comuna_21": layer_construcciones_catastrales_de_la_comuna_21_8,'<img src="legend/frecuencia_de_inundaciones_en_la_comuna_21_7.png" /> frecuencia_de_inundaciones_en_la_comuna_21': layer_frecuencia_de_inundaciones_en_la_comuna_21_7,'<img src="legend/inundacion_en_el_ao_2011_en_la_comuna_21_6.png" /> inundacion_en_el_año_2011_en_la_comuna_21': layer_inundacion_en_el_ao_2011_en_la_comuna_21_6,"comuna_21": layer_comuna_21_5,"dique_rio_cauca": layer_dique_rio_cauca_4,'<img src="legend/cuerpos_de_agua_en_la_comuna_21_3.png" /> cuerpos_de_agua_en_la_comuna_21': layer_cuerpos_de_agua_en_la_comuna_21_3,"cabecera_municipal": layer_cabecera_municipal_2,"limite_municipal": layer_limite_municipal_1,"Positron": layer_Positron_0,}).addTo(map);
+        L.control.layers(baseMaps, { 'construcciones_ilegales_jarillon<br /><table><tr><td style="text-align: center;"><img src="legend/construcciones_ilegales_jarillon_14_alta0.png" /></td><td>alta</td></tr><tr><td style="text-align: center;"><img src="legend/construcciones_ilegales_jarillon_14_media1.png" /></td><td>media</td></tr><tr><td style="text-align: center;"><img src="legend/construcciones_ilegales_jarillon_14_muyalta2.png" /></td><td>muy alta</td></tr></table>': layer_construcciones_ilegales_jarillon_14, "infraestructura_critica": layer_infraestructura_critica_13, "vias_principales_de_la_comuna": layer_vias_principales_de_la_comuna_12, "tramos_de_desborde": layer_tramos_de_desborde_11, "amenaza_de_inundacion_fluvial_en_la_comuna_21": layer_amenaza_de_inundacion_fluvial_en_la_comuna_21_10, "barrios_de_la_comuna_21": layer_barrios_de_la_comuna_21_9, "construcciones_catastrales_de_la_comuna_21": layer_construcciones_catastrales_de_la_comuna_21_8, '<img src="legend/frecuencia_de_inundaciones_en_la_comuna_21_7.png" /> frecuencia_de_inundaciones_en_la_comuna_21': layer_frecuencia_de_inundaciones_en_la_comuna_21_7, '<img src="legend/inundacion_en_el_ao_2011_en_la_comuna_21_6.png" /> inundacion_en_el_año_2011_en_la_comuna_21': layer_inundacion_en_el_ao_2011_en_la_comuna_21_6, "comuna_21": layer_comuna_21_5, "dique_rio_cauca": layer_dique_rio_cauca_4, '<img src="legend/cuerpos_de_agua_en_la_comuna_21_3.png" /> cuerpos_de_agua_en_la_comuna_21': layer_cuerpos_de_agua_en_la_comuna_21_3, "cabecera_municipal": layer_cabecera_municipal_2, "limite_municipal": layer_limite_municipal_1, "Positron": layer_Positron_0, }).addTo(map);
         map.addControl(new L.Control.Search({
             layer: layer_construcciones_ilegales_jarillon_14,
             initial: false,
             hideMarkerOnCollapse: true,
-            propertyName: 'nivel_riesgo'}));
+            propertyName: 'nivel_riesgo'
+        }));
         document.getElementsByClassName('search-button')[0].className +=
-         ' fa fa-binoculars';
-        </script>
-        <script src='http://ec2-100-26-14-49.compute-1.amazonaws.com:8080/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=taller2:frecuencia_de_inundaciones_en_la_comuna_21&SRSNAME=EPSG:4326&outputFormat=text%2Fjavascript&format_options=callback%3Agetfrecuencia_de_inundaciones_en_la_comuna_21_7Json'></script>
-    </body>
+            ' fa fa-binoculars';
+
+    </script>
+    <script
+        src='http://ec2-100-26-14-49.compute-1.amazonaws.com:8080/geoserver/wfs?SERVICE=WFS&VERSION=1.0.0&REQUEST=GetFeature&TYPENAME=taller2:frecuencia_de_inundaciones_en_la_comuna_21&SRSNAME=EPSG:4326&outputFormat=text%2Fjavascript&format_options=callback%3Agetfrecuencia_de_inundaciones_en_la_comuna_21_7Json'></script>
+</body>
+
 </html>

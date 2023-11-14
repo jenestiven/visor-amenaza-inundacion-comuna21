@@ -12,7 +12,7 @@
             background: white;
             background: rgba(255,255,255,0.8);
             box-shadow: 0 0 15px rgba(0,0,0,0.2);
-            border-radius: 5px;
+            border-radius: 5px; 
         }
         .info h2 {
             margin: 0 0 5px;
@@ -33,7 +33,6 @@
         }
         .leaflet-tooltip-left:before, .leaflet-tooltip-right:before {
             border: 0px;
-        }
         }
         .fa, .leaflet-container, a {
             color: #000000 !important;
